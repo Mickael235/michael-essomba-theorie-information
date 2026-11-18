@@ -14,17 +14,39 @@ end
 H = entropie_empirique(texte);
 Lfixe = ceil(log2(M));
 
-fprintf('Caractères : %d\n',N);
-fprintf('Alphabet   : %d\n',M);
-fprintf('Entropie   : %.4f bits/caractère\n',H);
-fprintf('Code fixe  : %d bits/caractère\n',Lfixe);
+[fs, idx] = sort(freq,'descend');
+n = min(20,numel(fs));
 
-[freqTriee,ordre] = sort(freq,'descend');
-symTriees = symboles(ordre);
-nAff = min(20,M);
+car_top = symboles(idx(1:n));
+freq_top = fs(1:n);
 
-figure('Name','P2 - Fréquences caractères');
-bar(freqTriee(1:nAff));
+labels = strings(1,n);
+
+for k = 1:n
+    c = car_top(k);
+
+    if c == ' '
+        labels(k) = "<espace>";
+    elseif c == newline
+        labels(k) = "<LF>";
+    elseif c == char(13)
+        labels(k) = "<CR>";
+    elseif c == char(9)
+        labels(k) = "<tab>";
+    else
+        labels(k) = string(c);
+    end
+end
+
+figure('Name','P2 - Frequences caracteres');
+bar(freq_top);
+xticks(1:n);
+xticklabels(labels);
+xtickangle(45);
+
+ylabel('Frequence');
+xlabel('Caractere');
+title('Caracteres les plus frequents');
 grid on;
 title('Caractères les plus fréquents');
 xlabel('Rang');

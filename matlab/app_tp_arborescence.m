@@ -1,7 +1,7 @@
 function app_tp_arborescence
 % APP_TP_ARBORESCENCE
 % Parcours complet du TP : Partie -> Question -> sous-etape.
-% Les scripts, tests et modeles sont cherches dans le dossier de cette app.
+% Les scripts sont dans matlab/ et les modeles Simulink dans simulink/.
 
 appDir = fileparts(mfilename('fullpath'));
 repoDir = fileparts(appDir);
@@ -257,7 +257,7 @@ build_partie('Synthese',data_syn());
         end
     end
 
-    % ---------------- Outils portables : tous les fichiers sont dans le meme dossier ----------------
+    % ---------------- Outils portables du depot ----------------
     function out = runbase(f)
         if isempty(f), out = 'Aucun script associe.'; return; end
         if ischar(f) || isstring(f), f = cellstr(f); end
@@ -265,11 +265,12 @@ build_partie('Synthese',data_syn());
         blocs = cell(1,numel(f));
         for ii = 1:numel(f)
             fi = f{ii};
-            if exist(fi,'file') ~= 2
-                blocs{ii} = ['Fichier absent : ' fi];
+            full = fullfile(matlabDir,fi);
+            if exist(full,'file') ~= 2
+                blocs{ii} = ['Fichier absent : ' full];
                 continue
             end
-            cmd = sprintf('run(''%s'');',strrep(fi,'''',''''''));
+            cmd = sprintf('run(''%s'');',strrep(full,'''',''''''));
             try
                 r = evalc('evalin(''base'',cmd)');
             catch ME
@@ -300,17 +301,11 @@ build_partie('Synthese',data_syn());
     function out = ouvrir(m)
         if isempty(m), out = 'Aucun modele associe.'; return; end
 
-        f = [m '.slx'];
+        f = fullfile(simulinkDir,[m '.slx']);
 
-        % Recherche relative au dossier du projet / app.
         if exist(f,'file') ~= 2
-            w = which(f);
-            if isempty(w)
-                out = ['Modele absent : ' f];
-                return
-            else
-                f = w;
-            end
+            out = ['Modele absent : ' f];
+            return
         end
 
         try
@@ -455,24 +450,24 @@ function D = data_p7
 D = [ ...
 item('7 Canal a 2 trajets','Q1 - Oeil, TEB et critere de Nyquist', ...
 'Etudier l''effet du canal h_c(t)=delta(t)+beta delta(t-tau) sur l''oeil et le TEB.', ...
-'','','', ...
+'partie7_canal_2_trajets.m','','', ...
 'Le trajet retarde ajoute une copie du symbole precedent et cree de l''interference entre symboles. L''oeil se ferme, le TEB augmente et le critere de Nyquist n''est plus respecte par la chaine globale.'); ...
 
 item('7 Canal a 2 trajets','Q2 - Egalisation', ...
 'Proposer une compensation recepteur et identifier les parametres du canal a connaitre.', ...
-'','','', ...
+'partie7_canal_2_trajets.m','','', ...
 'Un egaliseur zero-forcing peut inverser le canal mais amplifie le bruit ; un MMSE realise un compromis entre bruit et IES. Dans les deux cas, il faut au minimum estimer beta et tau.'); ...
 
 item('7 Canal a 2 trajets','Q3 - Transmission d''un texte', ...
 'Comparer le texte recu a 3 dB et 6 dB sans puis avec Hamming.', ...
-'','','', ...
+'partie7_canal_2_trajets.m','','', ...
 'A 3 dB, les erreurs binaires alterent de nombreux caracteres et le codage apporte peu sous son point de croisement. A 6 dB, les erreurs simples deviennent plus rares et Hamming peut corriger suffisamment de bits pour rendre le texte nettement plus lisible.')];
 end
 
 function D = data_syn
 D = item('8 Conclusion','Synthese globale', ...
 'Synthetiser l''apport de chaque bloc sur le TEB, le debit et l''occupation spectrale, puis situer les resultats par rapport a Shannon.', ...
-'','','', ...
+'partie8_synthese.m','','', ...
 ['Le codage de source retire la redondance ; le detecteur optimal exploite toute l''energie utile ; Hamming corrige des erreurs au prix de debit et de latence ; QPSK augmente l''efficacite spectrale ; le RRC controle la bande et l''IES. ' ...
 'La comparaison aux limites de Shannon rappelle enfin que ces blocs ameliorent la chaine sans atteindre la limite theorique ideale.']);
 end

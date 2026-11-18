@@ -117,20 +117,36 @@ Le facteur de roll-off `alpha` traduit un compromis entre bande occupée et tol�
 
 ## Application graphique principale
 
+L'application MATLAB sert de point d'entrée interactif pour parcourir l'ensemble du TP.
+
+![Application MATLAB du TP](assets/figures/Appli(1).PNG)
+
+L'interface est organisée par parties :
+
+- **P2 — Codage source**
+- **P3 — Chaîne de base**
+- **P4 — Hamming**
+- **P5 — QPSK**
+- **P6 — RRC**
+- **P7 — Canal à deux trajets**
+- **Synthèse**
+
+Pour chaque question, l'application affiche le script MATLAB associé, le modèle Simulink lorsqu'il existe, l'état d'exécution ainsi que les résultats et figures générés.
+
+Elle permet notamment :
+
+- d'exécuter directement les scripts MATLAB ;
+- d'afficher les figures produites ;
+- de consulter l'interprétation des résultats ;
+- de lancer les tests de validation ;
+- d'ouvrir les modèles Simulink associés.
+
 Depuis la racine du dépôt :
 
 ```matlab
 addpath(genpath('matlab'));
 app_tp_arborescence
 ```
-
-L'application permet de parcourir les différentes parties du TP et, selon la question :
-
-- d'exécuter le ou les scripts MATLAB associés ;
-- d'afficher les figures obtenues ;
-- de lire l'interprétation des résultats ;
-- de lancer les tests de validation ;
-- d'ouvrir le modèle Simulink correspondant.
 
 ## Mini-application
 
