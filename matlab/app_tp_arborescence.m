@@ -12,8 +12,11 @@ cd(repoDir);
 addpath(genpath(matlabDir));
 addpath(simulinkDir);
 
-fig = uifigure('Name','TP - Chaine de transmission numerique', ...
-    'Position',[60 40 1500 900]);
+screen = get(groot,'ScreenSize');
+
+fig = uifigure( ...
+    'Name','TP - Chaine de transmission numerique', ...
+    'Position',[20 40 screen(3)-40 screen(4)-100]);
 
 main = uigridlayout(fig,[1 1]);
 main.Padding = [5 5 5 5];
@@ -31,7 +34,7 @@ build_partie('Synthese',data_syn());
     function build_partie(titre,D)
         t = uitab(tg,'Title',titre);
         g = uigridlayout(t,[1 2]);
-        g.ColumnWidth = {330,'1x'};
+        g.ColumnWidth = {300,'1x'};
         g.Padding = [10 10 10 10];
 
         % -------- Colonne gauche : arborescence
@@ -53,8 +56,9 @@ build_partie('Synthese',data_syn());
         expand(tr);
 
         % -------- Colonne droite
-        right = uigridlayout(g,[10 1]);
-        right.RowHeight = {28,52,22,22,32,32,32,32,72,'1x'};
+        right = uigridlayout(g,[7 1]);
+        right.RowHeight = {30,55,22,22,70,90,'1x'};
+        right.RowSpacing = 6;
 
         titleLab = uilabel(right,'Text','','FontWeight','bold','FontSize',16);
         qLab = uitextarea(right,'Editable','off','FontSize',13);
@@ -65,18 +69,37 @@ build_partie('Synthese',data_syn());
         lamp = uilamp(statusGrid,'Color',[0.6 0.6 0.6]);
         statusLab = uilabel(statusGrid,'Text','Pret.');
 
-        bFig = uibutton(right,'Text','Afficher resultat / figure', ...
+        buttons = uigridlayout(right,[2 2]);
+        buttons.ColumnWidth = {'1x','1x'};
+        buttons.RowHeight = {30,30};
+        buttons.RowSpacing = 5;
+        buttons.ColumnSpacing = 8;
+        buttons.Padding = [0 0 0 0];
+
+        bFig = uibutton(buttons, ...
+            'Text','Afficher résultat / figure', ...
             'ButtonPushedFcn',@(~,~) run_script());
-        bInt = uibutton(right,'Text','Afficher interpretation', ...
+
+        bInt = uibutton(buttons, ...
+            'Text','Afficher interprétation', ...
             'ButtonPushedFcn',@(~,~) show_interp());
-        bTest = uibutton(right,'Text','Lancer le test', ...
+
+        bTest = uibutton(buttons, ...
+            'Text','Lancer le test', ...
             'ButtonPushedFcn',@(~,~) run_test());
-        bSlx = uibutton(right,'Text','Ouvrir Simulink', ...
+
+        bSlx = uibutton(buttons, ...
+            'Text','Ouvrir Simulink', ...
             'ButtonPushedFcn',@(~,~) open_slx());
+        
 
-        out = uitextarea(right,'Editable','off','FontName','Courier New','FontSize',12);
-
-        figPanel = uipanel(right,'Title','Figures obtenues');
+        out = uitextarea(right, ...
+            'Editable','off', ...
+            'FontName','Courier New', ...
+            'FontSize',11);
+        
+        figPanel = uipanel(right,'Title','Figures obtenues', ...
+            'FontWeight','bold');
         figGrid = uigridlayout(figPanel,[1 1]);
         figGrid.Padding = [5 5 5 5];
         figGrid.Scrollable = 'on';
