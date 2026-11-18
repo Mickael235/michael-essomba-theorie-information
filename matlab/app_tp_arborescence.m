@@ -4,8 +4,13 @@ function app_tp_arborescence
 % Les scripts, tests et modeles sont cherches dans le dossier de cette app.
 
 appDir = fileparts(mfilename('fullpath'));
-cd(appDir);
-addpath(appDir);
+repoDir = fileparts(appDir);
+matlabDir = fullfile(repoDir,'matlab');
+simulinkDir = fullfile(repoDir,'simulink');
+
+cd(repoDir);
+addpath(genpath(matlabDir));
+addpath(simulinkDir);
 
 fig = uifigure('Name','TP - Chaine de transmission numerique', ...
     'Position',[60 40 1500 900]);
@@ -450,8 +455,13 @@ D = item('8 Conclusion','Synthese globale', ...
 end
 
 function s = item(group,label,question,script,test,slx,interp)
-s = struct('group',group,'label',label,'question',question, ...
-    'script',script,'test',test,'slx',slx,'interp',interp);
+s.group = group;
+s.label = label;
+s.question = question;
+s.script = script;
+s.test = test;
+s.slx = slx;
+s.interp = interp;
 end
 
 function s = onoff(c)
