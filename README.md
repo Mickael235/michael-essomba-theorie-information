@@ -1,15 +1,17 @@
 # Théorie de l'information et du codage — Michael Essomba
 
-Projet MATLAB/Simulink réalisé à l'ENSIM autour de la **modélisation et simulation d'une chaîne de transmission numérique en bande de base**.
+Projet MATLAB/Simulink réalisé à l'ENSIM autour de la **modélisation et de la simulation d'une chaîne de transmission numérique en bande de base**.
 
-Le travail progresse du codage de source jusqu'à la modulation QPSK et au filtrage de mise en forme, avec validation théorique et simulation du taux d'erreur binaire (TEB).
+Le projet parcourt le codage de source, les canaux bruités, la détection optimale, le codage de Hamming, la modulation QPSK et la mise en forme RRC. Les résultats sont comparés aux expressions théoriques et validés par simulation.
 
 ## Structure du dépôt
 
 ```text
 .
-├── matlab/                  # Scripts, fonctions, tests et application MATLAB
+├── matlab/
 │   ├── app_tp_arborescence.m
+│   ├── mini_application_tp.m
+│   ├── lancer_mini_application.m
 │   ├── parametres_perso.m
 │   ├── partie2_*.m
 │   ├── partie3_*.m
@@ -19,7 +21,7 @@ Le travail progresse du codage de source jusqu'à la modulation QPSK et au filtr
 │   ├── run_*.m
 │   └── test_*.m
 │
-├── simulink/                # Modèles Simulink
+├── simulink/
 │   ├── Codage_source.slx
 │   ├── Partie3_CBS.slx
 │   ├── Partie3_Detecteur.slx
@@ -30,33 +32,34 @@ Le travail progresse du codage de source jusqu'à la modulation QPSK et au filtr
 │   ├── Partie5_QPSK_Hamming.slx
 │   └── Partie6_RRC.slx
 │
-├── docs/                    # Rapport, sujet, guide et déclaration IA
+├── docs/
+│   ├── GUIDE_UTILISATION.md
+│   ├── BIBLIOGRAPHIE.md
+│   ├── DECLARATION_IA.md
+│   └── TP_2026-2027_Simulink-2.pdf
+│
 ├── assets/
-│   ├── figures/             # Figures utilisées dans le README / rapport
-│   └── videos/              # Démonstration vidéo
+│   ├── figures/
+│   └── videos/
 │
 ├── Projet_guttenberg_Le Fantôme de lOpéra.txt
 ├── texte_fr.txt
 ├── resultats_partie6.mat
-├── README.md
-├── .gitignore
-└── reorganize_repo.py
+└── README.md
 ```
 
 ## Parties traitées
 
 | Partie | Contenu |
 |---|---|
-| 2 | Codage de source : entropie, Huffman, mémoire, LZ78 |
-| 3 | Chaîne de base : CBS, bruit uniforme, bruit gaussien, détecteur optimal |
-| 4 | Codage canal : Hamming C(7,4), syndrome, registre, performances |
-| 5 | Modulation QPSK : Gray, mapping naturel, QPSK + Hamming |
+| 2 | Codage de source : entropie, Huffman, mémoire et LZ78 |
+| 3 | Chaîne de base : CBS, bruit uniforme, bruit gaussien et détecteur optimal |
+| 4 | Codage canal : Hamming C(7,4), syndrome, registre et performances |
+| 5 | Modulation QPSK : Gray, mapping naturel et QPSK + Hamming |
 | 6 | Mise en forme : porte, RRC, Nyquist, DSP, œil et sensibilité temporelle |
 | 7 | Complément : canal à deux trajets |
 
-## Application interactive
-
-L'application permet de parcourir les différentes parties du TP, d'exécuter les scripts associés, d'afficher les figures, de consulter une interprétation, de lancer les tests demandés et d'ouvrir les modèles Simulink.
+## Application graphique principale
 
 Depuis la racine du dépôt :
 
@@ -65,89 +68,72 @@ addpath(genpath('matlab'));
 app_tp_arborescence
 ```
 
-L'application ajoute automatiquement les dossiers `matlab/` et `simulink/` au chemin MATLAB et conserve la racine du dépôt comme dossier de travail pour les fichiers de données.
+L'application permet de parcourir les différentes parties du TP et, selon la question :
+
+- d'exécuter le ou les scripts MATLAB associés ;
+- d'afficher les figures obtenues ;
+- de lire l'interprétation des résultats ;
+- de lancer les tests de validation ;
+- d'ouvrir le modèle Simulink correspondant.
+
+## Mini-application
+
+Une version en ligne de commande permet de lancer rapidement les scripts, tests et simulations principales :
+
+```matlab
+addpath(genpath('matlab'));
+lancer_mini_application
+```
 
 ## Paramètres personnels
 
-Les simulations utilisent les paramètres personnels définis dans :
+Les paramètres utilisés pour les simulations sont centralisés dans :
 
 ```text
 matlab/parametres_perso.m
 ```
 
-Les tirages aléatoires utilisent une graine fixe afin de conserver des résultats reproductibles.
+Les scripts utilisent ces paramètres afin de conserver le scénario personnel demandé dans le TP.
 
-## Résultats
+## Résultats principaux
 
-Quelques résultats principaux obtenus :
+Le projet permet notamment de vérifier :
 
-- validation sans bruit des chaînes Simulink ;
-- comparaison théorie / simulation du TEB ;
-- correction d'une erreur simple avec Hamming C(7,4) ;
-- comparaison QPSK Gray / naturel ;
-- analyse du filtre RRC et du critère de Nyquist.
+- la convergence du codage de source vers l'entropie ;
+- la compatibilité entre TEB simulé et expressions théoriques ;
+- l'intérêt du détecteur optimal ;
+- la correction d'une erreur simple par Hamming C(7,4) ;
+- le compromis redondance / gain de codage ;
+- l'équivalence TEB entre QPSK Gray et BPSK à même `E_b/N_0` ;
+- l'influence du roll-off RRC sur la bande et la sensibilité temporelle.
 
-### Exemple — performances Hamming
+## Figures et vidéo
 
-Lorsque l'image est ajoutée :
+Les figures destinées au rapport et au README sont placées dans :
+
+```text
+assets/figures/
+```
+
+Exemple :
 
 ```markdown
 ![Performances Hamming](assets/figures/p4_hamming_performances.png)
 ```
 
-Une fois l'image exportée dans `assets/figures/`, ajouter :
-
-```markdown
-![Performances Hamming](assets/figures/p4_hamming_performances.png)
-```
-
-### Exemple — QPSK
-
-```markdown
-![Performances QPSK](assets/figures/p5_qpsk_performances.png)
-```
-
-## Vidéo de présentation
-
-La vidéo de démonstration peut être déposée dans :
+Les vidéos de démonstration sont placées dans :
 
 ```text
 assets/videos/
 ```
 
-Puis référencée ici :
-
-```markdown
-[Voir la démonstration](assets/videos/demo_tp.mp4)
-```
-
 ## Documentation
 
 - [Guide d'utilisation](docs/GUIDE_UTILISATION.md)
+- [Bibliographie et ressources techniques](docs/BIBLIOGRAPHIE.md)
 - [Déclaration d'utilisation de l'IA](docs/DECLARATION_IA.md)
-- Sujet du TP : `docs/TP_2026-2027_Simulink-2.pdf`
-- Rapport final : `docs/rapport.pdf` une fois ajouté
+- [Sujet du TP](docs/TP_2026-2027_Simulink-2.pdf)
 
-## Réorganisation du dépôt
+## Nettoyage MATLAB / Simulink
 
-Le script :
-
-```bash
-python reorganize_repo.py
-```
-
-crée les dossiers, déplace les fichiers avec `git mv`, nettoie les caches MATLAB/Simulink, vérifie les fichiers essentiels et crée automatiquement le commit :
-
-```text
-chore: reorganise MATLAB Simulink project structure
-```
-
-Il ne reste ensuite qu'à pousser :
-
-```bash
-git push origin main
-```
-
-## Déclaration IA
-
-L'utilisation d'outils d'intelligence artificielle est décrite explicitement dans [`docs/DECLARATION_IA.md`](docs/DECLARATION_IA.md).
+Les caches et fichiers temporaires (`*.slxc`, `slprj/`, autosauvegardes) ne sont pas nécessaires au dépôt Git et sont exclus via `.gitignore`.
