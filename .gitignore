@@ -1,1 +1,9 @@
-*.slxc slprj/ codegen/ *.autosave *.asv *.m~ *.bak texte_5000.txt texte_5000.txt.gz
+*.slxc
+slprj/
+codegen/
+*.autosave
+*.asv
+*.m~
+*.bak
+texte_5000.txt
+texte_5000.txt.gz
