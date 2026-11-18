@@ -119,7 +119,7 @@ Le facteur de roll-off `alpha` traduit un compromis entre bande occupée et tol�
 
 L'application MATLAB sert de point d'entrée interactif pour parcourir l'ensemble du TP.
 
-![Application MATLAB du TP](assets/figures/Appli(1).PNG)
+![Application MATLAB du TP](assets/figures/Appli.PNG)
 
 L'interface est organisée par parties :
 
