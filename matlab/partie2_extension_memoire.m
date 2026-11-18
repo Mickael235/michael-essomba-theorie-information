@@ -60,8 +60,8 @@ codes = huffman_perso(freq);
 lg = cellfun(@length,codes);
 Lhuff = sum(freq.*lg);
 
-gzip(fichier);
-info = dir([fichier '.gz']);
+gz = gzip(fichier);
+info = dir(gz{1});
 Lgzip = 8*info.bytes/N;
 
 texte_court = texte(1:min(5000,N));
@@ -77,10 +77,12 @@ cc = huffman_perso(fc);
 Lhc = sum(fc.*cellfun(@length,cc));
 
 fid=fopen('texte_5000.txt','w','n','UTF-8');
-fwrite(fid,texte_court,'char'); fclose(fid);
-gzip('texte_5000.txt');
-ic=dir('texte_5000.txt.gz');
-Lgc=8*ic.bytes/length(texte_court);
+fwrite(fid,texte_court,'char');
+fclose(fid);
+
+gzc = gzip('texte_5000.txt');
+ic = dir(gzc{1});
+Lgc = 8*ic.bytes/length(texte_court);
 
 fprintf('\nMéthode              Complet      5000\n');
 fprintf('Entropie ordre 0     %.4f      %.4f\n',H0,H0c);
@@ -99,24 +101,13 @@ Hbits = -sum(pp(pp>0).*log2(pp(pp>0)))/2;
 
 fprintf('\nSortie Huffman : P(1)=%.4f, H paire/bit=%.4f\n',p1h,Hbits);
 
-methodes = { ...
-    'Entropie ordre 0', ...
-    'Huffman', ...
-    'H(X1,X2)/2', ...
-    'gzip'};
-
-valeurs = [ ...
-    H0 H0c;
-    Lhuff Lhc;
-    Hpaires Hpc;
-    Lgzip Lgc];
+methodes = {'Entropie ordre 0','Huffman','H(X1,X2)/2','gzip'};
+valeurs = [H0 H0c; Lhuff Lhc; Hpaires Hpc; Lgzip Lgc];
 
 figure('Name','P2 - Compression');
 bar(valeurs);
-
 xticks(1:4);
 xticklabels(methodes);
-
 ylabel('bits / caractere');
 title('P2 - Comparaison des methodes de compression');
 legend('Texte complet','5000 caracteres','Location','best');
