@@ -18,8 +18,7 @@ La chaîne est enrichie étape par étape :
 Chaque étape est validée par simulation et comparée aux résultats théoriques.
 
 ## Vue d'ensemble des résultats
-Lien vers la vidéo : <b><a href="https://drive.google.com/drive/u/0/my-drive?hl=fr" target="_blank" rel="noopener noreferrer">https://drive.google.com/drive/u/0/my-drive?hl=fr</a></b>
-<br aria-hidden="true">
+Lien vers la vidéo : <strong><a href="https://drive.google.com/file/d/1389typlhmT1kLnzJHi3HACIOdWoLD4EX/view?usp=sharing" target="_blank" rel="noopener noreferrer">https://drive.google.com/file/d/1389typlhmT1kLnzJHi3HACIOdWoLD4EX/view?usp=sharing</a></strong><br aria-hidden="true">
 ### 1. Codage de source
 
 La première partie étudie l'entropie, le codage de Huffman, l'extension de source et LZ78. Le but est de réduire la redondance avant transmission.
