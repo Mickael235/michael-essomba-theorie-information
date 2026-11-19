@@ -18,7 +18,7 @@ La chaîne est enrichie étape par étape :
 Chaque étape est validée par simulation et comparée aux résultats théoriques.
 
 ## Vue d'ensemble des résultats
-Lien vers la vidéo : <b><a href="https://drive.google.com/drive/u/0/my-drive?hl=fr###" target="_blank" rel="noopener noreferrer">https://drive.google.com/drive/u/0/my-drive?hl=fr###</a></b>
+Lien vers la vidéo : <b><a href="https://drive.google.com/drive/u/0/my-drive?hl=fr" target="_blank" rel="noopener noreferrer">https://drive.google.com/drive/u/0/my-drive?hl=fr###</a></b>
 <br aria-hidden="true">
 ### 1. Codage de source
 
